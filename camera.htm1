@@ -1,0 +1,60 @@
+2025-02-12 23:29:13	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2025-02-12 23:36:44	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2025-02-15 21:46:28	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2025-02-15 21:54:08	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2025-02-15 21:57:23	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2025-03-01 21:49:04	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2025-03-04 19:12:51	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2025-06-29 01:08:08	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2025-11-17 16:47:15	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2025-11-17 16:47:20	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2026-09-07 11:38:39	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+2026-09-07 11:44:31	00008020001065E101D9002E	DX3ZDZL3KXK1	353076108971469
+<h1>Camera Security Lab</h1>
+<p>Лабораторная работа по кибербезопасности</p>
+
+<button onclick="startCamera()">
+    Включить камеру
+</button>
+
+<button onclick="stopCamera()">
+    Выключить камеру
+</button>
+
+<p id="status">Статус: камера выключена</p>
+
+<video id="camera" width="320" autoplay playsinline></video>
+
+<script>
+    let stream = null;
+
+    async function startCamera() {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: false
+            });
+
+            document.getElementById("camera").srcObject = stream;
+
+            document.getElementById("status").textContent =
+                "Статус: камера включена";
+
+        } catch (error) {
+            document.getElementById("status").textContent =
+                "Доступ запрещён: " + error.message;
+        }
+    }
+
+    function stopCamera() {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+
+        document.getElementById("camera").srcObject = null;
+
+        document.getElementById("status").textContent =
+            "Статус: камера выключена";
+    }
+</script>
